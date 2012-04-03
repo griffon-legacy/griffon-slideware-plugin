@@ -1,0 +1,7 @@
+.idea
+out
+target
+*.iml
+griffon-slideware-*.zip
+plugin.xml
+.svn
