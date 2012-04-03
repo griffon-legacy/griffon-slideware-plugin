@@ -18,29 +18,52 @@
  * @author Andres Almiray
  */
 class SlidewareGriffonPlugin {
-    def version = '0.4'
-    def griffonVersion = '0.9.4 > *'
+    // the plugin version
+    def version = '0.5'
+    // the version or versions of Griffon the plugin is designed for
+    def griffonVersion = '0.9.5 > *'
+    // resources that are included in plugin packaging
     def pluginIncludes = []
+    // the plugin license
     def license = 'Apache Software License 2.0'
+    // Toolkit compatibility. No value means compatible with all
+    // Valid values are: swing, javafx, swt, pivot, gtk
     def toolkits = ['swing']
+    // Platform compatibility. No value means compatible with all
+    // Valid values are:
+    // linux, linux64, windows, windows64, macosx, macosx64, solaris
+    List platforms = []
 
+    // the other plugins this plugin depends on
     def dependsOn = [
-                     'transitions'    : '0.5',
-                     'css-builder'    : '0.8',
-                     'jide-builder'   : '0.6',
-                     'glazedlists'    : '0.8.3',
+                     'transitions'    : '0.6',
+                     'css-builder'    : '0.9',
+                     'jide-builder'   : '0.7',
+                     'glazedlists'    : '0.9',
                      'jbusycomponent' : '0.5.2',
-                     'i18n'           : '0.4.1',
-                     'lookandfeel'    : '0.5',
-                     'syntaxtext'     : '0.1'
+                     'i18n-support'   : '0.1',
+                     'lookandfeel'    : '0.6',
+                     'syntaxtext'     : '0.2'
     ]
 
-    def author = 'Andres Almiray'
-    def authorEmail = 'aalmiray@users.sourceforge.net'
+    List authors = [
+            [
+                    name: 'Andres Almiray',
+                    email: 'aalmiray@yahoo.com'
+            ],
+            [
+                    name: 'Alexander Klein',
+                    email: 'info@aklein.org'
+            ]
+    ]
+    // URL where documentation can be found
+    String documentation = ''
+    // URL where source can be found
+    String source = 'https://github.com/griffon/griffon-slideware-plugin'
     def title = 'Griffon based slideware'
+    // accepts Markdown syntax. See http://daringfireball.net/projects/markdown/ for details
     def description = '''
 Griffon based slideware
 '''
 
-    def documentation = 'http://griffon.codehaus.org/Slideware+Plugin'
 }

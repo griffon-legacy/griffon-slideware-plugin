@@ -20,11 +20,10 @@
  
 import griffon.util.GriffonNameUtils
 
-includeTargets << griffonScript("_GriffonInit")
 includeTargets << griffonScript("_GriffonCreateArtifacts")
 
 target (default : "Creates a Slide view") {
-    depends(checkVersion, parseArguments)
+    depends(checkVersion)
 
     def targetDir = new File("${basedir}/griffon-app/slides")
     targetDir.mkdirs()
