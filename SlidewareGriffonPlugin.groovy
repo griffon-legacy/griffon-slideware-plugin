@@ -19,7 +19,7 @@
  */
 class SlidewareGriffonPlugin {
     // the plugin version
-    def version = '0.5'
+    def version = '0.5.1-SNAPSHOT'
     // the version or versions of Griffon the plugin is designed for
     def griffonVersion = '0.9.5 > *'
     // resources that are included in plugin packaging
@@ -40,8 +40,8 @@ class SlidewareGriffonPlugin {
                      'css-builder'    : '0.9',
                      'jide-builder'   : '0.7',
                      'glazedlists'    : '0.9',
-                     'jbusycomponent' : '0.5.2',
-                     'i18n-support'   : '0.1',
+                     'jbusycomponent' : '0.5.3',
+                     'i18n-support'   : '0.2',
                      'lookandfeel'    : '0.6',
                      'syntaxtext'     : '0.2'
     ]
