@@ -19,7 +19,7 @@
  */
 class SlidewareGriffonPlugin {
     // the plugin version
-    def version = '0.5.1-SNAPSHOT'
+    def version = '0.5.1'
     // the version or versions of Griffon the plugin is designed for
     def griffonVersion = '0.9.5 > *'
     // resources that are included in plugin packaging

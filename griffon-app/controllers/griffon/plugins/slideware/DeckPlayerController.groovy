@@ -59,7 +59,9 @@ class DeckPlayerController extends AbstractDeckController {
                         transition: slide.transition],
                         mouseClicked: view.handleMouseEvent,
                         header: slide.header ?: (view.createHeader.maximumNumberOfParameters == 2 ? view.createHeader(slide, view.pageNumber) : view.createHeader(slide.title)),
-                        footer: slide.footer ?: (view.createFooter.maximumNumberOfParameters == 2 ? view.createFooter(slide, view.pageNumber) : view.createFooter(view.pageNumber)))
+                        footer: slide.footer ?: (view.createFooter.maximumNumberOfParameters == 2 ? view.createFooter(slide, view.pageNumber) : view.createFooter(view.pageNumber)),
+                        backgroundPainter : slide.backgroundPainter ?: view.backgroundPainter
+                )
                 view.slideActions[view.pageNumber - 1] = slide.slideActions
             }
             view.pageNumber++

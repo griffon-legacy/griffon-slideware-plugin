@@ -26,15 +26,18 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import com.bric.image.transition.Transition2D;
 
-import groovy.lang.Closure;
+import groovy.lang.*;
 import griffon.swing.SwingUtils;
-import org.xhtmlrenderer.css.parser.property.PrimitivePropertyBuilders;
+import org.codehaus.groovy.runtime.InvokerHelper;
 
 /**
  * @author Andres Almiray
  */
-public class Slide extends JPanel {
-    private final JPanel _content;
+public class Slide extends JPanel implements GroovyObject {
+    // never persist the MetaClass
+    private transient MetaClass metaClass;
+
+    private JPanel _content;
     private Transition2D transition;
     private String title;
     private String master;
@@ -45,6 +48,7 @@ public class Slide extends JPanel {
     private List<Closure> slideActions;
 
     public Slide() {
+        this.metaClass = InvokerHelper.getMetaClass(this.getClass());
         super.setLayout(new BorderLayout());
         _content = new JPanel();
         _content.setOpaque(false);
@@ -89,14 +93,18 @@ public class Slide extends JPanel {
 
     public void setHeader(JComponent header) {
         this.header = header;
-        header.setOpaque(false);
-        super.add(header, BorderLayout.NORTH);
+        if(header != null) {
+            header.setOpaque(false);
+            super.add(header, BorderLayout.NORTH);
+        }
     }
  
     public void setFooter(JComponent footer) {
         this.footer = footer;
-        footer.setOpaque(false);
-        super.add(footer, BorderLayout.SOUTH);
+        if(footer != null) {
+            footer.setOpaque(false);
+            super.add(footer, BorderLayout.SOUTH);
+        }
     }
 
     public void setSlideActions(List<Closure> actions) {
@@ -144,5 +152,45 @@ public class Slide extends JPanel {
         if(backgroundPainter != null) {
             backgroundPainter.call(new Object[]{this, g});
         }
+    }
+
+    public Object getProperty(String property) {
+        try {
+            return getMetaClass().getProperty(this, property);
+        } catch(MissingPropertyException e) {
+            return this.getClientProperty(property);
+        }
+    }
+
+    public void setProperty(String property, Object newValue) {
+        try {
+            getMetaClass().setProperty(this, property, newValue);
+        } catch(MissingPropertyException e) {
+            this.putClientProperty(property, newValue);
+        }
+    }
+
+    public Object invokeMethod(String name, Object args) {
+        try {
+            return getMetaClass().invokeMethod(this, name, args);
+        } catch(MissingMethodException e) {
+            Object clos = getProperty(name);
+            if(clos instanceof Closure) {
+                return InvokerHelper.invokeClosure(clos, args);
+            } else {
+                throw e;
+            }
+        }
+    }
+
+    public MetaClass getMetaClass() {
+        if (metaClass == null) {
+            metaClass = InvokerHelper.getMetaClass(getClass());
+        }
+        return metaClass;
+    }
+
+    public void setMetaClass(MetaClass metaClass) {
+        this.metaClass = metaClass;
     }
 }
