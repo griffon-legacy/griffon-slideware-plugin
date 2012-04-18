@@ -1,5 +1,5 @@
 /*
- * Copyright 2009-2011 the original author or authors.
+ * Copyright 2009-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,9 +20,9 @@
  
 import griffon.util.GriffonNameUtils
 
-includeTargets << griffonScript("_GriffonCreateArtifacts")
+includeTargets << griffonScript('_GriffonCreateArtifacts')
 
-target (default : "Creates a Slide view") {
+target (name: 'createSlide', description: 'Creates a Slide view', prehook: null, posthook: null) {
     depends(checkVersion)
 
     def targetDir = new File("${basedir}/griffon-app/slides")
@@ -44,15 +44,13 @@ target (default : "Creates a Slide view") {
     argsMap.skipPackagePrompt = true
 
     createArtifact(
-        name: "${slideName}Slide",
-        suffix: "",
-        type: "Slide",
-        path: "griffon-app/slides")
-
-    def artifactFile = "${basedir}/griffon-app/slides/${slideName}Slide.groovy"
+        name:   slideName,
+        suffix: 'Slide',
+        type:   'Slide',
+        path:   'griffon-app/slides')
 
     ant.replace(file: artifactFile) {
-        replacefilter(token: "@name@", value: slideName )
+        replacefilter(token: '@name@', value: slideName )
     }
 
     def configFile = new File("${basedir}/griffon-app/conf/Config.groovy")
@@ -77,3 +75,4 @@ presentation {
     }
     configFile.write configText
 }
+setDefaultTarget(createSlide)
