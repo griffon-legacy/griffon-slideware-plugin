@@ -43,7 +43,7 @@ class DeckLauncherController extends AbstractDeckController {
     }
 
     def playAction = { evt = null ->
-        execSync { model.busy = true }
+        execInsideUISync { model.busy = true }
         try {
             app.event('LaunchDeckStart')
             def (m, v, c) = createMVCGroup('DeckPlayer')
@@ -51,12 +51,12 @@ class DeckLauncherController extends AbstractDeckController {
             app.event('LaunchDeckEnd')
             c.show()
         } finally {
-            execAsync { model.busy = false }
+            execInsideUIAsync { model.busy = false }
         }
     }
 
     def printAction = { evt = null ->
-        execSync { model.busy = true }
+        execInsideUISync { model.busy = true }
         def (m, v, c) = createMVCGroup('DeckPlayer')
         
         Map settings = [
@@ -82,7 +82,7 @@ class DeckLauncherController extends AbstractDeckController {
             (0..<v.deck.size()).each { i ->
                 Slide slide = v.deck[i]
                 def imageSet = null
-                execSync {imageSet = slide.takeSnapshot() }
+                execInsideUISync {imageSet = slide.takeSnapshot() }
                 imageSet.each { image ->
                     Image img = Image.getInstance(image, null)
                     img.setDpi(600i, 600i)
@@ -91,7 +91,7 @@ class DeckLauncherController extends AbstractDeckController {
                 }
                 for(def action: v.slideActions[i]) {
                     def print = true
-                    execSync {
+                    execInsideUISync {
                         if(action.maximumNumberOfParameters == 2) {
                             print = action.call(false, true)
                         } else {
@@ -100,7 +100,7 @@ class DeckLauncherController extends AbstractDeckController {
                     }
                     if(print == null || print) {
                         imageSet = null
-                        execSync {imageSet = slide.takeSnapshot() }
+                        execInsideUISync {imageSet = slide.takeSnapshot() }
                         imageSet.each { image ->
                             Image img = Image.getInstance(image, null)
                             img.setDpi(600i, 600i)
@@ -109,7 +109,7 @@ class DeckLauncherController extends AbstractDeckController {
                         }
                     }
                 }
-                execSync {
+                execInsideUISync {
                     v.deck.layout.next(v.deck)
                 }
             }
@@ -119,7 +119,7 @@ class DeckLauncherController extends AbstractDeckController {
             app.config.presentation.screenWidth = settings.screenWidth
             app.config.presentation.screenHeight = settings.screenHeight
             c.hide()
-            execAsync { model.busy = false }
+            execInsideUIAsync { model.busy = false }
         }
     }
 
