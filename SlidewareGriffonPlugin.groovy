@@ -1,5 +1,5 @@
 /*
- * Copyright 2009-2011 the original author or authors.
+ * Copyright 2009-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,31 +19,30 @@
  */
 class SlidewareGriffonPlugin {
     // the plugin version
-    def version = '0.7'
+    String version = '1.0.0'
     // the version or versions of Griffon the plugin is designed for
-    def griffonVersion = '0.9.5 > *'
+    String griffonVersion = '1.2.0 > *'
     // resources that are included in plugin packaging
-    def pluginIncludes = []
+    List pluginIncludes = []
     // the plugin license
-    def license = 'Apache Software License 2.0'
+    String license = 'Apache Software License 2.0'
     // Toolkit compatibility. No value means compatible with all
     // Valid values are: swing, javafx, swt, pivot, gtk
-    def toolkits = ['swing']
+    List toolkits = ['swing']
     // Platform compatibility. No value means compatible with all
     // Valid values are:
     // linux, linux64, windows, windows64, macosx, macosx64, solaris
     List platforms = []
 
     // the other plugins this plugin depends on
-    def dependsOn = [
-                     'transitions'    : '0.6',
-                     'css-builder'    : '0.9',
-                     'jide-builder'   : '0.7',
-                     'glazedlists'    : '0.9',
-                     'jbusycomponent' : '0.5.3',
-                     'i18n-support'   : '0.2',
-                     'lookandfeel'    : '0.6',
-                     'syntaxtext'     : '0.2'
+    Map dependsOn = [
+                     'transitions'    : '1.0.0',
+                     'css-builder'    : '1.0.0',
+                     'jide-builder'   : '1.0.0',
+                     'glazedlists'    : '1.1.0',
+                     'jbusycomponent' : '1.0.0',
+                     'lookandfeel'    : '1.0.0',
+                     'syntaxtext'     : '1.0.0'
     ]
 
     List authors = [
@@ -60,10 +59,9 @@ class SlidewareGriffonPlugin {
     String documentation = ''
     // URL where source can be found
     String source = 'https://github.com/griffon/griffon-slideware-plugin'
-    def title = 'Griffon based slideware'
+    String title = 'Griffon based slideware'
     // accepts Markdown syntax. See http://daringfireball.net/projects/markdown/ for details
-    def description = '''
+    String description = '''
 Griffon based slideware
 '''
-
 }

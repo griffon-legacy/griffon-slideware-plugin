@@ -1,7 +1,7 @@
 DESCRIPTION
         create-slide
 
-	Creates a new slide.
+    Creates a new slide.
 
 SYNTAX
         create-slide [options] [name] 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2009-2011 the original author or authors.
+ * Copyright 2009-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,6 +39,7 @@ public class Slide extends JPanel implements GroovyObject {
 
     private JPanel _content;
     private Transition2D transition;
+    private long duration = -1L;
     private String title;
     private String master;
     private JComponent header;
@@ -57,6 +58,10 @@ public class Slide extends JPanel implements GroovyObject {
 
     public Transition2D getTransition() {
         return transition;
+    }
+
+    public long getDuration() {
+        return duration;
     }
 
     public String getTitle() {
@@ -81,6 +86,10 @@ public class Slide extends JPanel implements GroovyObject {
 
     public void setTransition(Transition2D transition) {
         this.transition = transition;
+    }
+
+    public void setDuration(long duration) {
+        this.duration = duration;
     }
 
     public void setTitle(String title) {

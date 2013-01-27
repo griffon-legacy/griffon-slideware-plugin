@@ -1,5 +1,5 @@
 /*
- * Copyright 2009-2011 the original author or authors.
+ * Copyright 2009-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,7 +56,8 @@ class DeckPlayerController extends AbstractDeckController {
             view.currentSlide = slide
             builder.container(view.deck) {
                 widget(slide, constraints: [name: 'page' + view.pageNumber,
-                        transition: slide.transition],
+                        transition: slide.transition,
+                        duration: slide.duration],
                         mouseClicked: view.handleMouseEvent,
                         header: slide.header ?: (view.createHeader.maximumNumberOfParameters == 2 ? view.createHeader(slide, view.pageNumber) : view.createHeader(slide.title)),
                         footer: slide.footer ?: (view.createFooter.maximumNumberOfParameters == 2 ? view.createFooter(slide, view.pageNumber) : view.createFooter(view.pageNumber)),

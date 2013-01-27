@@ -1,5 +1,5 @@
 /*
- * Copyright 2009-2011 the original author or authors.
+ * Copyright 2009-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@
 
 package griffon.plugins.slideware
 
+import org.fife.ui.autocomplete.AutoCompletion
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants
 
 modifyFont = { target, sizeFilter, sizeMod ->
@@ -40,14 +41,21 @@ action(id: 'decreaseFontAction',
     closure: {modifyFont(it.source, {it < 5}, -2)})
 
 rtextScrollPane(id: 'groovyEditorContainer') {
-    rsyntaxTextArea(id: 'groovyEditor', editable: bind{ model.editable },
+    rsyntaxTextArea(id: 'groovyEditor', editable: bind { model.editable },
         syntaxEditingStyle: SyntaxConstants.SYNTAX_STYLE_GROOVY,
         tabSize: 4,
         text: bind('code', source: model, mutual: true),
         cssClass: 'codeEditor') {
         action(runAction)
     }
-    
+    noparent {
+        bean(new AutoCompletion(model.codeCompletionProvider),
+            triggerKey: shortcut('shift SPACE'),
+            showDescWindow: false,
+            autoCompleteSingleChoices: true
+        ).install(groovyEditor)
+    }
+
     keyStrokeAction(component: groovyEditor,
         keyStroke: shortcut('shift L'),
         condition: 'in focused window',
@@ -65,7 +73,7 @@ noparent {
                 editable: false,
                 name: "outputArea",
                 contentType: "text/html",
-                background: new Color(255,255,218),
+                background: new Color(255, 255, 218),
                 font: new Font("Monospaced", Font.PLAIN, 18),
                 border: emptyBorder(4),
                 mousePressed: { outputWindow.visible = false }
