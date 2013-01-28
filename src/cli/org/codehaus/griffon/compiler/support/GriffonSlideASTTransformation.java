@@ -16,17 +16,14 @@
 
 package org.codehaus.griffon.compiler.support;
 
-import org.codehaus.groovy.ast.*;
-import org.codehaus.groovy.ast.expr.*;
-import org.codehaus.groovy.ast.stmt.*;
-import org.codehaus.groovy.control.CompilePhase;
-import org.codehaus.groovy.control.SourceUnit;
-import org.codehaus.groovy.transform.GroovyASTTransformation;
-
 import griffon.plugins.slideware.GriffonSlide;
 import griffon.plugins.slideware.GriffonSlideClass;
 import org.codehaus.griffon.runtime.slideware.AbstractGriffonSlideScript;
-
+import org.codehaus.groovy.ast.ClassHelper;
+import org.codehaus.groovy.ast.ClassNode;
+import org.codehaus.groovy.control.CompilePhase;
+import org.codehaus.groovy.control.SourceUnit;
+import org.codehaus.groovy.transform.GroovyASTTransformation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,9 +31,9 @@ import org.slf4j.LoggerFactory;
  * Handles generation of code for Griffon slides.
  * <p/>
  *
- * @author Andres Almiray 
+ * @author Andres Almiray
  */
-@GroovyASTTransformation(phase=CompilePhase.CANONICALIZATION)
+@GroovyASTTransformation(phase = CompilePhase.CANONICALIZATION)
 public class GriffonSlideASTTransformation extends GriffonArtifactASTTransformation {
     private static final Logger LOG = LoggerFactory.getLogger(GriffonSlideASTTransformation.class);
     private static final String ARTIFACT_PATH = "slides";
@@ -46,20 +43,23 @@ public class GriffonSlideASTTransformation extends GriffonArtifactASTTransformat
     protected boolean allowsScriptAsArtifact() {
         return true;
     }
-    
-    protected void transform(ClassNode classNode, SourceUnit source, String artifactPath) {
-        if(!ARTIFACT_PATH.equals(artifactPath) || !classNode.getName().endsWith(GriffonSlideClass.TRAILING)) return;
 
-        if(classNode.isDerivedFrom(ClassHelper.SCRIPT_TYPE)) {
-            if(LOG.isDebugEnabled()) LOG.debug("Setting "+ABSTRACT_GRIFFON_SLIDE_SCRIPT_CLASS.getName()+" as the superclass of "+classNode.getName());
+    protected void transform(ClassNode classNode, SourceUnit source, String artifactPath) {
+        if (!ARTIFACT_PATH.equals(artifactPath) || !classNode.getName().endsWith(GriffonSlideClass.TRAILING))
+            return;
+
+        if (classNode.isDerivedFrom(ClassHelper.SCRIPT_TYPE)) {
+            if (LOG.isDebugEnabled())
+                LOG.debug("Setting " + ABSTRACT_GRIFFON_SLIDE_SCRIPT_CLASS.getName() + " as the superclass of " + classNode.getName());
             classNode.setSuperClass(ABSTRACT_GRIFFON_SLIDE_SCRIPT_CLASS);
-        } else if(!classNode.implementsInterface(GRIFFON_SLIDE_CLASS)){
+        } else if (!classNode.implementsInterface(GRIFFON_SLIDE_CLASS)) {
             inject(classNode);
         }
     }
 
     private void inject(ClassNode classNode) {
-        if(LOG.isDebugEnabled()) LOG.debug("Injecting "+GRIFFON_SLIDE_CLASS.getName()+" behavior to "+ classNode.getName());
+        if (LOG.isDebugEnabled())
+            LOG.debug("Injecting " + GRIFFON_SLIDE_CLASS.getName() + " behavior to " + classNode.getName());
         // 1. add interface
         classNode.addInterface(GRIFFON_SLIDE_CLASS);
         // 2. add methods

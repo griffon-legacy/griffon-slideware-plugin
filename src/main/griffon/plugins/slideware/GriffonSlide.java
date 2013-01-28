@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 package griffon.plugins.slideware;
 
 import griffon.core.GriffonArtifact;
@@ -31,7 +31,7 @@ public interface GriffonSlide extends GriffonArtifact {
      * however they can opt out and build the UI by other means.
      *
      * @param builder the builder instance that belongs to the same MVC group
-     * as this View.
+     *                as this View.
      */
     void setBuilder(FactoryBuilderSupport builder);
 }

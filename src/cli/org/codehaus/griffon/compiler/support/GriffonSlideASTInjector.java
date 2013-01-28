@@ -16,22 +16,19 @@
 
 package org.codehaus.griffon.compiler.support;
 
-import org.codehaus.groovy.ast.*;
-import org.codehaus.groovy.ast.expr.*;
-import org.codehaus.groovy.ast.stmt.*;
-
 import groovy.util.FactoryBuilderSupport;
+import org.codehaus.groovy.ast.ClassHelper;
+import org.codehaus.groovy.ast.ClassNode;
 
 /**
- *
- * @author Andres Almiray 
+ * @author Andres Almiray
  */
 public class GriffonSlideASTInjector extends GriffonArtifactASTInjector {
     private static final ClassNode FBS_CLASS = ClassHelper.makeWithoutCaching(FactoryBuilderSupport.class);
-    
+
     public void inject(ClassNode classNode, String artifactType) {
         super.inject(classNode, artifactType);
-    
+
         // FactoryBuilderSupport getBuilder()
         // void setBuilder(FactoryBuilderSupport builder)
         classNode.addProperty("builder", ACC_PUBLIC, FBS_CLASS, null, null, null);

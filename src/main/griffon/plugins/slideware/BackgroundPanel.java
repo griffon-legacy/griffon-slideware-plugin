@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 package griffon.plugins.slideware;
 
 import java.awt.Color;
-import java.awt.Paint;
 import java.awt.Graphics2D;
+import java.awt.Paint;
 import java.awt.Rectangle;
 
 /**

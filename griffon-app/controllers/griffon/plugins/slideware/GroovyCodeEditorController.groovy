@@ -16,24 +16,15 @@
 
 package griffon.plugins.slideware
 
-import java.awt.Dimension
-import javax.swing.text.AttributeSet
-import javax.swing.text.Element
-import javax.swing.text.SimpleAttributeSet
-import javax.swing.text.Style
-import javax.swing.text.StyleConstants
-import javax.swing.text.html.HTML
-
+import griffon.transform.Threading
 import groovy.ui.SystemOutputInterceptor
-
-import org.codehaus.groovy.runtime.InvokerHelper
 import org.codehaus.groovy.control.ErrorCollector
 import org.codehaus.groovy.control.MultipleCompilationErrorsException
-import org.codehaus.groovy.control.messages.SyntaxErrorMessage
 import org.codehaus.groovy.control.messages.ExceptionMessage
+import org.codehaus.groovy.control.messages.SyntaxErrorMessage
 import org.codehaus.groovy.syntax.SyntaxException
 
-import griffon.transform.Threading
+import javax.swing.text.AttributeSet
 
 /**
  * @author Andres Almiray
@@ -47,7 +38,7 @@ class GroovyCodeEditorController {
     private int maxOutputChars = 20000
     private SystemOutputInterceptor systemOutInterceptor
 
-    void mvcGroupInit(Map<String, Object> args){
+    void mvcGroupInit(Map<String, Object> args) {
         systemOutInterceptor = new SystemOutputInterceptor({ String str ->
             appendOutput(str, model.styles.outputStyle)
             false
@@ -55,14 +46,14 @@ class GroovyCodeEditorController {
     }
 
     def runAction = { evt = null ->
-        if(!model.code) return
+        if (!model.code) return
         def scriptText = model.code
         clearOutput()
         systemOutInterceptor.start()
         try {
-            def result = shell.run(scriptText, "Script"+(scriptCount++), [])
+            def result = shell.run(scriptText, "Script" + (scriptCount++), [])
             finishNormal(result)
-        } catch(Throwable t) {
+        } catch (Throwable t) {
             finishException(t)
         } finally {
             systemOutInterceptor.stop()
@@ -72,7 +63,7 @@ class GroovyCodeEditorController {
     @Threading(Threading.Policy.INSIDE_UITHREAD_ASYNC)
     private void finishNormal(result) {
         ensureNoDocLengthOverflow(model.document)
-        if(model.document.length) popOutputWindow()
+        if (model.document.length) popOutputWindow()
     }
 
     @Threading(Threading.Policy.INSIDE_UITHREAD_ASYNC)
@@ -108,12 +99,12 @@ class GroovyCodeEditorController {
         appendOutput(t.message + '\n', model.styles.stacktraceStyle)
 
         StringWriter sw = new StringWriter()
-        new PrintWriter(sw).withWriter {pw -> GriffonExceptionHandler.sanitize(t).printStackTrace(pw) }
+        new PrintWriter(sw).withWriter { pw -> GriffonExceptionHandler.sanitize(t).printStackTrace(pw) }
         appendStacktrace("\n${sw.buffer}\n")
     }
 
     // Append a string to the output area
-    private void appendOutput(String text, AttributeSet style){
+    private void appendOutput(String text, AttributeSet style) {
         def doc = model.document
         doc.insertString(doc.length, text, style)
         ensureNoDocLengthOverflow(doc)
@@ -144,7 +135,7 @@ class GroovyCodeEditorController {
     }
 
     // Append a string to the output area on a new line
-    private void appendOutputNl(text, style){
+    private void appendOutputNl(text, style) {
         def doc = model.document
         def len = doc.length
         if (len > 0 && doc.getText(len - 1, 1) != "\n") {
@@ -154,7 +145,7 @@ class GroovyCodeEditorController {
     }
 
     private void clearOutput() {
-        if(model.document.length) model.document.remove(0, model.document.length)
+        if (model.document.length) model.document.remove(0, model.document.length)
     }
 
     private void ensureNoDocLengthOverflow(doc) {

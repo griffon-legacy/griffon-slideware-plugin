@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 package griffon.plugins.slideware.factory
 
-import javax.swing.JPanel
-import javax.swing.JComponent
-import groovy.swing.factory.ComponentFactory
 import griffon.plugins.slideware.Slide
+import groovy.swing.factory.ComponentFactory
+
+import javax.swing.JComponent
+import javax.swing.JPanel
 
 /**
  * @author Andres Almiray
@@ -30,12 +31,12 @@ class SlideHeaderFactory extends ComponentFactory {
     }
 
     Object newInstance(FactoryBuilderSupport builder, Object name, Object value, Map attributes) throws InstantiationException, IllegalAccessException {
-        if(value instanceof JComponent) return value
+        if (value instanceof JComponent) return value
         return beanClass.newInstance()
     }
 
     void setParent(FactoryBuilderSupport build, Object parent, Object node) {
-        if(parent instanceof Slide) {
+        if (parent instanceof Slide) {
             parent.header = node
         } else {
             super.setParent(build, parent, node)

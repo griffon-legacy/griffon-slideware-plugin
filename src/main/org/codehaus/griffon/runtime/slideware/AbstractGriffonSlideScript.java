@@ -18,7 +18,6 @@ package org.codehaus.griffon.runtime.slideware;
 
 import griffon.plugins.slideware.GriffonSlide;
 import griffon.plugins.slideware.GriffonSlideClass;
-
 import groovy.util.FactoryBuilderSupport;
 import org.codehaus.griffon.runtime.core.AbstractGriffonMvcArtifactScript;
 
@@ -29,7 +28,7 @@ import org.codehaus.griffon.runtime.core.AbstractGriffonMvcArtifactScript;
  */
 public abstract class AbstractGriffonSlideScript extends AbstractGriffonMvcArtifactScript implements GriffonSlide {
     private FactoryBuilderSupport builder;
-    
+
     public AbstractGriffonSlideScript() {
         super(GriffonSlideClass.TYPE);
     }

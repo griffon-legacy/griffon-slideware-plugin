@@ -22,16 +22,16 @@ package griffon.plugins.slideware
 
 actions {
     action(id: 'cancelAction',
-       name: app.getMessage('application.action.Cancel.name', 'Cancel'),
-       closure: controller.hide,
-       mnemonic: app.getMessage('application.action.Cancel.mnemonic', 'C'),
-       shortDescription: app.getMessage('application.action.Cancel.description', 'Cancel')
+        name: app.getMessage('application.action.Cancel.name', 'Cancel'),
+        closure: controller.hide,
+        mnemonic: app.getMessage('application.action.Cancel.mnemonic', 'C'),
+        shortDescription: app.getMessage('application.action.Cancel.description', 'Cancel')
     )
     action(id: 'okAction',
-       name: app.getMessage('application.action.Ok.name', 'Ok'),
-       closure: controller.accept,
-       mnemonic: app.getMessage('application.action.Ok.mnemonic', 'K'),
-       shortDescription: app.getMessage('application.action.Ok.description', 'Ok')
+        name: app.getMessage('application.action.Ok.name', 'Ok'),
+        closure: controller.accept,
+        mnemonic: app.getMessage('application.action.Ok.mnemonic', 'K'),
+        shortDescription: app.getMessage('application.action.Ok.description', 'Ok')
     )
 }
 
@@ -42,11 +42,11 @@ panel(id: 'content') {
         selected: bind('fullScreen', source: model, mutual: true))
     label(app.getMessage('application.dialog.DeckConfig.screenSize', 'Screen size'))
     textField(columns: 4, constraints: 'left',
-        editable: bind{!model.fullScreen}, enabled: bind{!model.fullScreen},
+        editable: bind { !model.fullScreen }, enabled: bind { !model.fullScreen },
         text: bind('screenWidth', source: model, mutual: true))
     label('x', constraints: 'center')
     textField(columns: 4, constraints: 'left, wrap',
-        editable: bind{!model.fullScreen}, enabled: bind{!model.fullScreen},
+        editable: bind { !model.fullScreen }, enabled: bind { !model.fullScreen },
         text: bind('screenHeight', source: model, mutual: true))
     label(app.getMessage('application.dialog.DeckConfig.fileName', 'File Name'))
     textField(columns: 20, constraints: 'left, span 3, wrap',
@@ -57,7 +57,7 @@ panel(id: 'content') {
         button(cancelAction, constraints: 'right')
         button(okAction, constraints: 'right')
     }
-    
+
     keyStrokeAction(component: current,
         keyStroke: "ESCAPE",
         condition: "in focused window",

@@ -26,6 +26,6 @@ abstract class AbstractDeckController {
     def helpAction = { evt = null ->
         withMVCGroup('DeckHelp') { m, v, c ->
             c.show()
-        } 
+        }
     }
 }

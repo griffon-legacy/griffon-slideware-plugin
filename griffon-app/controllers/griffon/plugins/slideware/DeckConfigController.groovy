@@ -21,7 +21,7 @@ package griffon.plugins.slideware
  */
 class DeckConfigController extends DialogController {
     def accept = { evt = null ->
-        if(model.validate()) {
+        if (model.validate()) {
             model.writeConfig()
             hide()
         }

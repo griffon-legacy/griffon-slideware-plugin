@@ -16,10 +16,11 @@
 
 package griffon.plugins.slideware
 
+import ca.odell.glazedlists.BasicEventList
+import ca.odell.glazedlists.EventList
+
 import java.awt.Toolkit
 import java.awt.event.KeyEvent
-import ca.odell.glazedlists.EventList
-import ca.odell.glazedlists.BasicEventList
 
 /**
  * @author Andres Almiray
@@ -27,7 +28,8 @@ import ca.odell.glazedlists.BasicEventList
 class DeckHelpModel extends AbstractDialogModel {
     EventList shortcuts = new BasicEventList()
 
-    protected String getDialogKey()   { 'DeckHelp' }
+    protected String getDialogKey() { 'DeckHelp' }
+
     protected String getDialogTitle() { 'Help' }
 
     void mvcGroupInit(Map<String, Object> args) {

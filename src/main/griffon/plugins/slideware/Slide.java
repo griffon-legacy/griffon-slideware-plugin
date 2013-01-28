@@ -16,19 +16,15 @@
 
 package griffon.plugins.slideware;
 
-import java.awt.Graphics;
-import java.awt.LayoutManager;
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Image;
-import java.util.List;
+import com.bric.image.transition.Transition2D;
+import griffon.swing.SwingUtils;
+import groovy.lang.*;
+import org.codehaus.groovy.runtime.InvokerHelper;
+
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-import com.bric.image.transition.Transition2D;
-
-import groovy.lang.*;
-import griffon.swing.SwingUtils;
-import org.codehaus.groovy.runtime.InvokerHelper;
+import java.awt.*;
+import java.util.List;
 
 /**
  * @author Andres Almiray
@@ -102,15 +98,15 @@ public class Slide extends JPanel implements GroovyObject {
 
     public void setHeader(JComponent header) {
         this.header = header;
-        if(header != null) {
+        if (header != null) {
             header.setOpaque(false);
             super.add(header, BorderLayout.NORTH);
         }
     }
- 
+
     public void setFooter(JComponent footer) {
         this.footer = footer;
-        if(footer != null) {
+        if (footer != null) {
             footer.setOpaque(false);
             super.add(footer, BorderLayout.SOUTH);
         }
@@ -122,12 +118,12 @@ public class Slide extends JPanel implements GroovyObject {
 
     public void setLayout(LayoutManager layout) {
         // guard is required for constructor
-        if(_content != null) _content.setLayout(layout);
+        if (_content != null) _content.setLayout(layout);
     }
 
     public void setSnapshot(Closure snapshot) {
         this.snapshot = snapshot;
-        if(snapshot != null) {
+        if (snapshot != null) {
             snapshot.setResolveStrategy(Closure.DELEGATE_FIRST);
             snapshot.setDelegate(this);
         }
@@ -135,7 +131,7 @@ public class Slide extends JPanel implements GroovyObject {
 
     public void setBackgroundPainter(Closure backgroundPainter) {
         this.backgroundPainter = backgroundPainter;
-        if(backgroundPainter != null) {
+        if (backgroundPainter != null) {
             backgroundPainter.setResolveStrategy(Closure.DELEGATE_FIRST);
             backgroundPainter.setDelegate(this);
         }
@@ -150,15 +146,15 @@ public class Slide extends JPanel implements GroovyObject {
     }
 
     public Image[] takeSnapshot() {
-        if(snapshot != null) {
+        if (snapshot != null) {
             return (Image[]) snapshot.call();
         }
-        return new Image[]{ SwingUtils.takeSnapshot(this) };
+        return new Image[]{SwingUtils.takeSnapshot(this)};
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if(backgroundPainter != null) {
+        if (backgroundPainter != null) {
             backgroundPainter.call(new Object[]{this, g});
         }
     }
@@ -166,7 +162,7 @@ public class Slide extends JPanel implements GroovyObject {
     public Object getProperty(String property) {
         try {
             return getMetaClass().getProperty(this, property);
-        } catch(MissingPropertyException e) {
+        } catch (MissingPropertyException e) {
             return this.getClientProperty(property);
         }
     }
@@ -174,7 +170,7 @@ public class Slide extends JPanel implements GroovyObject {
     public void setProperty(String property, Object newValue) {
         try {
             getMetaClass().setProperty(this, property, newValue);
-        } catch(MissingPropertyException e) {
+        } catch (MissingPropertyException e) {
             this.putClientProperty(property, newValue);
         }
     }
@@ -182,9 +178,9 @@ public class Slide extends JPanel implements GroovyObject {
     public Object invokeMethod(String name, Object args) {
         try {
             return getMetaClass().invokeMethod(this, name, args);
-        } catch(MissingMethodException e) {
+        } catch (MissingMethodException e) {
             Object clos = getProperty(name);
-            if(clos instanceof Closure) {
+            if (clos instanceof Closure) {
                 return InvokerHelper.invokeClosure(clos, args);
             } else {
                 throw e;

@@ -16,17 +16,15 @@
 
 package griffon.plugins.slideware
 
-import static griffon.util.GriffonApplicationUtils.*
-
-import java.awt.Color
-import javax.swing.JComponent
-import org.codehaus.groovy.runtime.InvokerHelper
-import javax.swing.text.Style
-import javax.swing.text.StyleContext
-import javax.swing.text.StyleConstants
-import javax.swing.text.StyledDocument
-
 import groovy.ui.text.GroovyFilter
+import org.codehaus.groovy.runtime.InvokerHelper
+
+import javax.swing.text.Style
+import javax.swing.text.StyleConstants
+import javax.swing.text.StyleContext
+import java.awt.Color
+
+import static griffon.util.GriffonApplicationUtils.*
 
 /**
  * @author Andres.Almiray
@@ -51,12 +49,12 @@ class EditorStyles {
             ],
 
             // syntax highlighting styles
-            (StyleContext.DEFAULT_STYLE) : [
+            (StyleContext.DEFAULT_STYLE): [
                 (StyleConstants.FontFamily): "Monospaced",
             ],
             (GroovyFilter.COMMENT): [
                 (StyleConstants.Foreground): Color.LIGHT_GRAY.darker().darker(),
-                (StyleConstants.Italic) : true,
+                (StyleConstants.Italic): true,
             ],
             (GroovyFilter.QUOTES): [
                 (StyleConstants.Foreground): Color.MAGENTA.darker().darker(),
@@ -80,14 +78,14 @@ class EditorStyles {
             ],
         ]
 
-        if(isWindowsVista) {
+        if (isWindowsVista) {
             styles.regular[StyleConstants.FontFamily] = 'Consolas'
             styles[StyleContext.DEFAULT_STYLE][StyleConstants.FontFamily] = 'Consolas'
-        } else if(isLinux) {
+        } else if (isLinux) {
             // change font to DejaVu Sans Mono, much clearer
             styles.regular[StyleConstants.FontFamily] = 'DejaVu Sans Mono'
             styles[StyleContext.DEFAULT_STYLE][StyleConstants.FontFamily] = 'DejaVu Sans Mono'
-        } else if(isMacOSX) {
+        } else if (isMacOSX) {
             // redo output styles
             styles = [
                 // output window styles
@@ -109,7 +107,7 @@ class EditorStyles {
                 // syntax highlighting styles
                 (GroovyFilter.COMMENT): [
                     (StyleConstants.Foreground): Color.LIGHT_GRAY.darker().darker(),
-                    (StyleConstants.Italic) : true,
+                    (StyleConstants.Italic): true,
                 ],
                 (GroovyFilter.QUOTES): [
                     (StyleConstants.Foreground): Color.MAGENTA.darker().darker(),
@@ -138,25 +136,25 @@ class EditorStyles {
 
     static apply(editor) {
         def inputArea = editor.textEditor
-        def applyStyle = {Style style, values -> values.each{k, v -> style.addAttribute(k, v)}}
+        def applyStyle = { Style style, values -> values.each { k, v -> style.addAttribute(k, v) } }
 
-        if(isWindowsVista) {
+        if (isWindowsVista) {
             // in JDK 1.5 we need to turn on anti-aliasing so consolas looks better
-            if(isJdk15 && !isJdk16) {
+            if (isJdk15 && !isJdk16) {
                 def key = InvokerHelper.getProperty('com.sun.java.swing.SwingUtilities2' as Class,
-                  'AA_TEXT_PROPERTY_KEY')
+                    'AA_TEXT_PROPERTY_KEY')
                 editor.putClientProperty(key, true)
             }
-        } else if(isLinux) {
+        } else if (isLinux) {
             // possibly change look and feel
-            if(isJdk15 && !isJdk16) {
+            if (isJdk15 && !isJdk16) {
                 // GTK wasn't where it needed to be in 1.5, especially with toolbars
                 // use metal instead
                 // lookAndFeel('metal', boldFonts:false)
 
                 // we also need to turn on anti-alising ourselves
                 def key = InvokerHelper.getProperty('com.sun.java.swing.SwingUtilities2' as Class,
-                     'AA_TEXT_PROPERTY_KEY')
+                    'AA_TEXT_PROPERTY_KEY')
                 editor.putClientProperty(key, true)
             }
         }
@@ -164,7 +162,7 @@ class EditorStyles {
         // redo styles for editor
         def doc = inputArea.getStyledDocument()
         StyleContext styleContext = StyleContext.getDefaultStyleContext()
-        getPlatformStyles().each {styleName, defs ->
+        getPlatformStyles().each { styleName, defs ->
             Style style = styleContext.getStyle(styleName)
             if (style) {
                 applyStyle(style, defs)

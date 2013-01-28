@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 package griffon.plugins.slideware;
 
 import javax.imageio.ImageIO;
@@ -34,13 +34,13 @@ public final class GraphicsUtil {
     public static BufferedImage createCompatibleImage(int width, int height, boolean withAlpha) {
         if (GraphicsEnvironment.isHeadless()) {
             return new BufferedImage(width,
-                    height,
-                    (withAlpha ? BufferedImage.TYPE_INT_ARGB : BufferedImage.TYPE_INT_RGB));
+                height,
+                (withAlpha ? BufferedImage.TYPE_INT_ARGB : BufferedImage.TYPE_INT_RGB));
         } else {
             GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
             return gc.createCompatibleImage(width,
-                    height,
-                    (withAlpha ? Transparency.TRANSLUCENT : Transparency.OPAQUE));
+                height,
+                (withAlpha ? Transparency.TRANSLUCENT : Transparency.OPAQUE));
         }
     }
 
@@ -50,7 +50,7 @@ public final class GraphicsUtil {
 
     public static Rectangle scaleBounds(int w, int h, Rectangle bounds, float fitAmount) {
         fitAmount = fitAmount >= 0.0f && fitAmount <= 1.0f ? fitAmount : 0.9f;
-        
+
         int width = w;
         int height = h;
 
@@ -58,10 +58,10 @@ public final class GraphicsUtil {
             height = (int) (bounds.height * fitAmount);
             width = (w * height) / h;
         }
-        
-        if(width > bounds.width) {
-           width = (int) (bounds.height * fitAmount);
-           height = (h * width) / w; 
+
+        if (width > bounds.width) {
+            width = (int) (bounds.height * fitAmount);
+            height = (h * width) / w;
         }
 
         int x = bounds.x + ((bounds.width - width) / 2);

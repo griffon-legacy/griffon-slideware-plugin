@@ -16,10 +16,10 @@
 
 package griffon.plugins.slideware
 
-import java.awt.Component
-import java.awt.Dimension
-import com.lowagie.text.*
-import com.lowagie.text.pdf.*
+import com.lowagie.text.Document
+import com.lowagie.text.Image
+import com.lowagie.text.Rectangle
+import com.lowagie.text.pdf.PdfWriter
 
 /**
  * @author Andres Almiray
@@ -28,7 +28,7 @@ class DeckLauncherController extends AbstractDeckController {
     def model
 
     void mvcGroupInit(Map<String, Object> args) {
-        if(!app.config.presentation) {
+        if (!app.config.presentation) {
             app.config.presentation.fileName = Metadata.current.getApplicationName() + '.pdf'
             app.config.presentation.fullScreen = false
             app.config.presentation.screenWidth = '1024'
@@ -58,17 +58,17 @@ class DeckLauncherController extends AbstractDeckController {
     def printAction = { evt = null ->
         execInsideUISync { model.busy = true }
         def (m, v, c) = createMVCGroup('DeckPlayer')
-        
+
         Map settings = [
             fullScreen: app.config.presentation.fullScreen,
             screenWidth: app.config.presentation.screenWidth,
             screenHeight: app.config.presentation.screenHeight
         ]
-        
+
         try {
             int width = 1024
             int height = 768
-            
+
             v.deck.layout.skipTransitions = true
             app.config.presentation.fullScreen = false
             app.config.presentation.screenWidth = width
@@ -82,25 +82,25 @@ class DeckLauncherController extends AbstractDeckController {
             (0..<v.deck.size()).each { i ->
                 Slide slide = v.deck[i]
                 def imageSet = null
-                execInsideUISync {imageSet = slide.takeSnapshot() }
+                execInsideUISync { imageSet = slide.takeSnapshot() }
                 imageSet.each { image ->
                     Image img = Image.getInstance(image, null)
                     img.setDpi(600i, 600i)
                     img.setXYRatio(2.5f)
                     document.add(img)
                 }
-                for(def action: v.slideActions[i]) {
+                for (def action : v.slideActions[i]) {
                     def print = true
                     execInsideUISync {
-                        if(action.maximumNumberOfParameters == 2) {
+                        if (action.maximumNumberOfParameters == 2) {
                             print = action.call(false, true)
                         } else {
                             print = action.call(false)
                         }
                     }
-                    if(print == null || print) {
+                    if (print == null || print) {
                         imageSet = null
-                        execInsideUISync {imageSet = slide.takeSnapshot() }
+                        execInsideUISync { imageSet = slide.takeSnapshot() }
                         imageSet.each { image ->
                             Image img = Image.getInstance(image, null)
                             img.setDpi(600i, 600i)
@@ -123,14 +123,14 @@ class DeckLauncherController extends AbstractDeckController {
         }
     }
 
-    def quitAction = { evt = null -> 
-        app.shutdown()    
+    def quitAction = { evt = null ->
+        app.shutdown()
     }
 
     def onDeckPlayerClosed = {
         def groupsToDelete = []
         app.groups.each { name, group ->
-            if(name != 'DeckLauncher') groupsToDelete << name
+            if (name != 'DeckLauncher') groupsToDelete << name
         }
         groupsToDelete.each { name ->
             destroyMVCGroup(name)

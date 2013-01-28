@@ -17,6 +17,7 @@
 package griffon.plugins.slideware
 
 import griffon.transform.Threading
+
 import java.awt.Window
 
 /**
@@ -31,8 +32,8 @@ class DialogController {
 
     @Threading(Threading.Policy.INSIDE_UITHREAD_SYNC)
     def show = { Window window = null ->
-        window = window ?: Window.windows.find{it.focused}
-        if(!dialog || dialog.owner != window) {
+        window = window ?: Window.windows.find { it.focused }
+        if (!dialog || dialog.owner != window) {
             dialog = builder.dialog(
                 owner: window,
                 title: model.title,
@@ -40,7 +41,7 @@ class DialogController {
                 modal: model.modal) {
                 container(view.content)
             }
-            if(model.width > 0 && model.height > 0) {
+            if (model.width > 0 && model.height > 0) {
                 dialog.preferredSize = [model.width, model.height]
             }
             dialog.pack()

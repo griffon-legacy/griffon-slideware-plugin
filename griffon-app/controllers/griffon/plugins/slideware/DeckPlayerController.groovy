@@ -16,13 +16,13 @@
 
 package griffon.plugins.slideware
 
-import java.awt.Toolkit
-import java.awt.Dimension
-import griffon.builder.css.CSSDecorator
 import griffon.builder.css.CSSBindings
-import static griffon.swing.SwingUtils.centerOnScreen
-
 import griffon.transform.Threading
+
+import java.awt.Dimension
+import java.awt.Toolkit
+
+import static griffon.swing.SwingUtils.centerOnScreen
 
 /**
  * @author Andres Almiray
@@ -56,12 +56,12 @@ class DeckPlayerController extends AbstractDeckController {
             view.currentSlide = slide
             builder.container(view.deck) {
                 widget(slide, constraints: [name: 'page' + view.pageNumber,
-                        transition: slide.transition,
-                        duration: slide.duration],
-                        mouseClicked: view.handleMouseEvent,
-                        header: slide.header ?: (view.createHeader.maximumNumberOfParameters == 2 ? view.createHeader(slide, view.pageNumber) : view.createHeader(slide.title)),
-                        footer: slide.footer ?: (view.createFooter.maximumNumberOfParameters == 2 ? view.createFooter(slide, view.pageNumber) : view.createFooter(view.pageNumber)),
-                        backgroundPainter : slide.backgroundPainter ?: view.backgroundPainter
+                    transition: slide.transition,
+                    duration: slide.duration],
+                    mouseClicked: view.handleMouseEvent,
+                    header: slide.header ?: (view.createHeader.maximumNumberOfParameters == 2 ? view.createHeader(slide, view.pageNumber) : view.createHeader(slide.title)),
+                    footer: slide.footer ?: (view.createFooter.maximumNumberOfParameters == 2 ? view.createFooter(slide, view.pageNumber) : view.createFooter(view.pageNumber)),
+                    backgroundPainter: slide.backgroundPainter ?: view.backgroundPainter
                 )
                 view.slideActions[view.pageNumber - 1] = slide.slideActions
             }
@@ -106,8 +106,8 @@ class DeckPlayerController extends AbstractDeckController {
         app.windowManager.hide('deckPlayerWindow')
         view.deckPlayerWindow.undecorated = undecorated
         view.deckPlayerWindow.preferredSize = [
-                width as int,
-                height as int
+            width as int,
+            height as int
         ]
         view.deckPlayerWindow.pack()
         view.decorateCss(view.deckPlayerWindow)

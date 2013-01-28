@@ -22,7 +22,7 @@ package griffon.plugins.slideware
 
 actions {
     action(id: 'closeAction',
-           closure: controller.hide)
+        closure: controller.hide)
 }
 
 panel(id: 'content') {

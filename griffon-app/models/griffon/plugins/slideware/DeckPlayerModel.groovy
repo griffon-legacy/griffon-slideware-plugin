@@ -16,8 +16,8 @@
 
 package griffon.plugins.slideware
 
-import griffon.lookandfeel.LookAndFeelManager
 import griffon.lookandfeel.LookAndFeelInfo
+import griffon.lookandfeel.LookAndFeelManager
 
 /**
  * @author Andres Almiray
@@ -29,7 +29,7 @@ class DeckPlayerModel {
     DeckPlayerModel() {
         LookAndFeelManager.instance.lookAndFeelProviders.sort().each { provider ->
             provider.supportedLookAndFeels.sort().each { laf ->
-                lafs[(provider.toString() +' - '+ laf.toString())] = laf
+                lafs[(provider.toString() + ' - ' + laf.toString())] = laf
             }
         }
     }

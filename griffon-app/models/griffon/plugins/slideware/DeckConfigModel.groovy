@@ -15,9 +15,6 @@
  */
 
 package griffon.plugins.slideware
-
-import static griffon.util.GriffonNameUtils.isBlank
-
 /**
  * @author Andres Almiray
  */
@@ -27,7 +24,8 @@ class DeckConfigModel extends AbstractDialogModel {
     @Bindable String screenHeight = ''
     @Bindable String fileName = ''
 
-    protected String getDialogKey()   { 'DeckConfig' }
+    protected String getDialogKey() { 'DeckConfig' }
+
     protected String getDialogTitle() { 'Configuration' }
 
     void mvcGroupInit(Map<String, Object> args) {
@@ -49,18 +47,18 @@ class DeckConfigModel extends AbstractDialogModel {
 
     void writeConfig() {
         app.config.presentation.fullScreen = fullScreen
-        if(!fullScreen) {
+        if (!fullScreen) {
             app.config.presentation.screenWidth = screenWidth
             app.config.presentation.screenHeight = screenHeight
         }
-        if(fileName) app.config.presentation.fileName = fileName      
+        if (fileName) app.config.presentation.fileName = fileName
     }
 
     private static boolean isNumber(val) {
         try {
             Integer.parseInt(val)
             true
-        } catch(NumberFormatException nfe) {
+        } catch (NumberFormatException nfe) {
             false
         }
     }

@@ -13,11 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 package griffon.plugins.slideware;
 
-import java.awt.*;
-import javax.swing.*;
+import javax.swing.JPanel;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 /**
@@ -35,7 +38,7 @@ public abstract class DrawingPanel extends JPanel {
             getBounds(previousBounds);
         }
 
-        if (cachedImage == null || !equals(previousBounds, getBounds())){
+        if (cachedImage == null || !equals(previousBounds, getBounds())) {
             getBounds(previousBounds);
             cachedImage = createImage();
         }
@@ -49,9 +52,9 @@ public abstract class DrawingPanel extends JPanel {
 
     private boolean equals(Rectangle a, Rectangle b) {
         return a.x == b.x &&
-               b.y == b.y &&
-               a.width == b.width &&
-               a.height == b.height;
+            b.y == b.y &&
+            a.width == b.width &&
+            a.height == b.height;
     }
 
     private Image createImage() {

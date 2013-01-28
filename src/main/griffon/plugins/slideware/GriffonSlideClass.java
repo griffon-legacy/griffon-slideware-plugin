@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 package griffon.plugins.slideware;
 
 import griffon.core.GriffonClass;
@@ -24,8 +24,12 @@ import griffon.core.GriffonClass;
  * @author Andres Almiray
  */
 public interface GriffonSlideClass extends GriffonClass {
-    /** "slide" */
+    /**
+     * "slide"
+     */
     String TYPE = "slide";
-    /** "Slide" */
+    /**
+     * "Slide"
+     */
     String TRAILING = "Slide";
 }

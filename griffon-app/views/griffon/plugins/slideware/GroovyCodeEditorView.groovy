@@ -25,20 +25,20 @@ import org.fife.ui.rsyntaxtextarea.SyntaxConstants
 
 modifyFont = { target, sizeFilter, sizeMod ->
     def currentFont = target.font
-    if(sizeFilter(currentFont.size)) return
+    if (sizeFilter(currentFont.size)) return
     target.font = currentFont.deriveFont((currentFont.size + sizeMod) as float)
 }
 
 action(id: 'hideOutputAction',
-    closure: {it.source.visible = false})
+    closure: { it.source.visible = false })
 action(id: 'runAction',
     keyStroke: shortcut('ENTER'),
-    enabled: bind{ model.editable },
+    enabled: bind { model.editable },
     closure: controller.runAction)
 action(id: 'increaseFontAction',
-    closure: {modifyFont(it.source, {it > 40}, +2)})
+    closure: { modifyFont(it.source, { it > 40 }, +2) })
 action(id: 'decreaseFontAction',
-    closure: {modifyFont(it.source, {it < 5}, -2)})
+    closure: { modifyFont(it.source, { it < 5 }, -2) })
 
 rtextScrollPane(id: 'groovyEditorContainer') {
     rsyntaxTextArea(id: 'groovyEditor', editable: bind { model.editable },
@@ -65,7 +65,7 @@ rtextScrollPane(id: 'groovyEditorContainer') {
         condition: 'in focused window',
         action: decreaseFontAction)
 }
-        
+
 noparent {
     window(visible: false, id: 'outputWindow', pack: true, locationRelativeTo: groovyEditor) {
         scrollPane(border: emptyBorder(2)) {
@@ -86,7 +86,7 @@ noparent {
                 StyledDocument doc = outputArea.styledDocument
                 model.document = doc
                 Style defStyle = StyleContext.defaultStyleContext.getStyle(StyleContext.DEFAULT_STYLE)
-                def applyStyle = {Style style, values -> values.each{k, v -> style.addAttribute(k, v)}}
+                def applyStyle = { Style style, values -> values.each { k, v -> style.addAttribute(k, v) } }
 
                 def styles = EditorStyles.getPlatformStyles()
                 model.styles.regular = doc.addStyle("regular", defStyle)
