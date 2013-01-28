@@ -26,6 +26,8 @@ import org.codehaus.groovy.syntax.SyntaxException
 
 import javax.swing.text.AttributeSet
 
+import static griffon.util.GriffonExceptionHandler.sanitize
+
 /**
  * @author Andres Almiray
  */
@@ -77,7 +79,6 @@ class GroovyCodeEditorController {
             collector.errors.each { error ->
                 if (error instanceof SyntaxErrorMessage) {
                     SyntaxException se = error.cause
-                    int errorLine = se.line
                     String message = se.originalMessage
                     def doc = model.document
                     doc.insertString(doc.length, message + " at ", model.styles.stacktraceStyle)
@@ -99,7 +100,7 @@ class GroovyCodeEditorController {
         appendOutput(t.message + '\n', model.styles.stacktraceStyle)
 
         StringWriter sw = new StringWriter()
-        new PrintWriter(sw).withWriter { pw -> GriffonExceptionHandler.sanitize(t).printStackTrace(pw) }
+        new PrintWriter(sw).withWriter { pw -> sanitize(t).printStackTrace(pw) }
         appendStacktrace("\n${sw.buffer}\n")
     }
 

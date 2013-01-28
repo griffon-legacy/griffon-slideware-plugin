@@ -17,24 +17,21 @@
 /**
  * @author Andres Almiray
  */
- 
-import griffon.util.GriffonNameUtils
-
 includeTargets << griffonScript('_GriffonCreateArtifacts')
 
-target (name: 'createSlide', description: 'Creates a Slide view', prehook: null, posthook: null) {
+target(name: 'createSlide', description: 'Creates a Slide view', prehook: null, posthook: null) {
     depends(checkVersion)
 
     def targetDir = new File("${basedir}/griffon-app/slides")
     targetDir.mkdirs()
 
     def slideName
-    if(!argsMap["params"]) {
+    if (!argsMap["params"]) {
         int count = 1
         targetDir.eachFile { file ->
             def m = file.name =~ /Page(\d+)Slide\.groovy/
-            if(m) {
-               count = Math.max(count, (m[0][1] as int) + 1)
+            if (m) {
+                count = Math.max(count, (m[0][1] as int) + 1)
             }
         }
         slideName = "Page${count}"
@@ -50,26 +47,26 @@ target (name: 'createSlide', description: 'Creates a Slide view', prehook: null,
         path:   'griffon-app/slides')
 
     ant.replace(file: artifactFile) {
-        replacefilter(token: '@name@', value: slideName )
+        replacefilter(token: '@name@', value: slideName)
     }
 
     def configFile = new File("${basedir}/griffon-app/conf/Config.groovy")
     def configText = configFile.text
     def matcher = configText =~ /\s*presentation\s*\{/
-    if (! matcher) {
+    if (!matcher) {
         configText += """
 presentation {
     screenWidth = 1024
     screenHeight = 768
     order = [
-        "${slideName}"
+        '${slideName}'
     ]
 }
 """
     } else {
         def m = configText =~ /(?ms)\s*presentation\s*\{.*order\s*=\s*(\[.*\]).*}/
         def order = evaluate(m[0][1])
-        order << slideName
+        order << "'${slideName}'"
         def newOrder = order.inspect().replaceAll(/, /, ',\n\t').replaceAll(/\[/, '[\n\t').replaceAll(/\]/, '\n\t]')
         configText = configText.substring(0, m.start(1)) + newOrder + configText.substring(m.end(1))
     }

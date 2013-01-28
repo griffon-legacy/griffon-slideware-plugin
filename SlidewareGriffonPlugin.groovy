@@ -38,6 +38,7 @@ class SlidewareGriffonPlugin {
     Map dependsOn = [
                      'transitions'    : '1.0.0',
                      'css-builder'    : '1.0.0',
+                     'gfx-builder'    : '1.1.0',
                      'jide-builder'   : '1.0.0',
                      'glazedlists'    : '1.1.0',
                      'jbusycomponent' : '1.0.0',

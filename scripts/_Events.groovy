@@ -19,13 +19,13 @@
  */
 
 eventCollectArtifacts = { artifactsInfo ->
-    if(!artifactsInfo.find{ it.type == 'slide' }) {
+    if (!artifactsInfo.find { it.type == 'slide' }) {
         artifactsInfo << [type: 'slide', path: 'slides', suffix: 'Slide']
     }
 }
 
 eventStatsStart = { paths ->
-    if(!paths.find{ it.path == 'slides'} ) {
+    if (!paths.find { it.path == 'slides' }) {
         paths << [name: 'Slides', path: 'slides', filetype: ['.groovy']]
     }
 }
